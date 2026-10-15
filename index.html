@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NEXUS FILES</title>
+<style>
+:root {
+  color-scheme: dark;
+  --purple: #a855f7;
+  --bg: #08060d;
+  --panel: rgba(20, 16, 29, .82);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  color: #fff;
+  background:
+    radial-gradient(ellipse at 100% 0%, #6421a355, transparent 45%),
+    radial-gradient(ellipse at 0% 100%, #42108033, transparent 50%),
+    var(--bg);
+  background-attachment: fixed;
+}
+header {
+  padding: 22px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ffffff15;
+  background: #08060dbb;
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(15px);
+  z-index: 2;
+}
+.logo {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+.logo span { color: #c084fc; }
+.badge {
+  border: 1px solid #a855f755;
+  background: #a855f71a;
+  color: #d8b4fe;
+  padding: 8px 12px;
+  border-radius: 30px;
+  font-size: 12px;
+}
+main { max-width: 1000px; margin: auto; padding: 55px 20px; }
+.hero { margin-bottom: 30px; }
+.eyebrow {
+  color: #c084fc;
+  letter-spacing: 4px;
+  font-size: 11px;
+  font-weight: bold;
+}
+h1 { font-size: clamp(38px, 8vw, 65px); margin: 15px 0; }
+h1 span {
+  color: transparent;
+  background: linear-gradient(90deg, #fff, #c084fc, #9333ea);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+.subtitle { color: #aaa1b7; line-height: 1.7; }
+.card {
+  border: 1px solid #ffffff17;
+  background: var(--panel);
+  border-radius: 18px;
+  padding: 24px;
+  margin: 22px 0;
+  box-shadow: 0 15px 60px #0003;
+}
+.card h2 { margin-top: 0; font-size: 18px; }
+.drop {
+  border: 1px dashed #a855f777;
+  border-radius: 14px;
+  padding: 30px 15px;
+  text-align: center;
+  background: #a855f708;
+}
+.upload-icon { font-size: 36px; margin-bottom: 12px; }
+button, .file-input-label {
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 17px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  background: linear-gradient(120deg, #7e22ce, #a855f7);
+}
+button:active { transform: scale(.98); }
+input[type=file] { display: none; }
+input[type=search] {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ffffff20;
+  border-radius: 10px;
+  background: #09070e;
+  color: white;
+  margin-bottom: 15px;
+}
+.note { color: #9b91a8; font-size: 12px; line-height: 1.6; }
+.file {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #ffffff12;
+}
+.file:last-child { border-bottom: 0; }
+.file-icon { font-size: 25px; }
+.file-info { min-width: 0; flex: 1; }
+.file-name { overflow-wrap: anywhere; font-weight: bold; }
+.file-meta { color: #958ba2; font-size: 12px; margin-top: 5px; }
+.actions { display: flex; gap: 7px; }
+.actions button { padding: 9px; font-size: 12px; }
+.delete { background: #7f1d1d; }
+.empty { color: #958ba2; text-align: center; padding: 25px 0; }
+footer { text-align: center; color: #71677e; padding: 25px; font-size: 12px; }
+@media(max-width:520px) {
+  main { padding: 35px 14px; }
+  .card { padding: 17px; }
+  .file { flex-wrap: wrap; }
+  .actions { width: 100%; padding-left: 37px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">NEXUS<span>FILES</span></div>
+  <div class="badge">✦ FILE HUB</div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow">YOUR DIGITAL SPACE</div>
+    <h1>Store it.<br><span>Find it. Download it.</span></h1>
+    <p class="subtitle">Your personal file hub for documents, images, archives, and more.</p>
+  </section>
+
+  <section class="card">
+    <h2>＋ Upload files</h2>
+    <div class="drop">
+      <div class="upload-icon">☁️</div>
+      <p>Select files from your device</p>
+      <label class="file-input-label" for="picker">Choose files</label>
+      <input id="picker" type="file" multiple>
+      <p class="note">Files selected here are uploaded only when cloud storage is connected.</p>
+    </div>
+    <p class="note" id="status">Cloud storage is not connected yet.</p>
+  </section>
+
+  <section class="card">
+    <h2>▦ Your files</h2>
+    <input id="search" type="search" placeholder="Search files...">
+    <div id="files"><div class="empty">Your cloud file list will appear here.</div></div>
+  </section>
+</main>
+
+<footer>NEXUS FILES · YOUR DIGITAL SPACE</footer>
+
+<script>
+const picker = document.getElementById('picker');
+const statusText = document.getElementById('status');
+
+picker.addEventListener('change', () => {
+  if (!picker.files.length) return;
+  statusText.textContent =
+    picker.files.length + ' file(s) selected. Cloud upload is not connected yet.';
+});
+
+document.getElementById('search').addEventListener('input', () => {
+  const
