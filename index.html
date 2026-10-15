@@ -333,8 +333,9 @@ picker.addEventListener("change", async () => {
 
       statusText.textContent = `Uploaded ${file.name} successfully!`;
     } catch (error) {
-      statusText.textContent = `Upload failed for ${file.name}.`;
-      console.error(error);
+      statusText.textContent =
+  `Upload failed: ${error.message || "Unknown error"}`;
+console.error("NEXUS upload error:", error);
     }
   }
 
